@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Configuração do banco de dados
-DATABASE_URL = "postgresql://usuario:senha@db:5434/api_ecommerce"
+DATABASE_URL = "postgresql://usuario:senha@localhost:5434/api_ecommerce"
 
 # Cria a engine de conexão com o banco de dados
 engine = create_engine(DATABASE_URL)
