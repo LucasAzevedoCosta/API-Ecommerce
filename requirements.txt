@@ -3,3 +3,4 @@ SQLAlchemy==1.4.46
 Flask-Login==0.6.2
 Flask-Cors==3.0.10
 Werkzeug==2.3.0
+psycopg2-binary==2.9.10
