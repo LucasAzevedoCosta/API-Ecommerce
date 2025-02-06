@@ -55,7 +55,7 @@ def delete_products(product_id):
             db.commit()
 
             # Retorna uma mensagem de sucesso
-            return jsonify({"message": "Produto removido com sucesso"}), 200
+            return jsonify({"message": "Produto removido com sucesso"})
         else:
             # Retorna uma mensagem de erro se o produto não for encontrado
             return jsonify({"error": "Produto não encontrado"}), 404
@@ -68,3 +68,58 @@ def delete_products(product_id):
     finally:
         # Fecha a sessão
         db.close()
+
+
+
+@products_bp.route('/<int:product_id>', methods=['GET'])
+def get_products_details(product_id):
+    # Cria uma nova sessão
+    db = SessionLocal()
+
+    try:
+        # Busca o produto pelo ID
+        product = db.query(Product).get(product_id)
+
+        if product:
+            return jsonify({
+                "id": product.id,
+                "name": product.name,
+                "price": product.price,
+                "description": product.description
+            })
+        else:
+            # Retorna uma mensagem de erro se o produto não for encontrado
+            return jsonify({"error": "Produto não encontrado"}), 404
+
+    except Exception as e:
+        # Em caso de erro, faz rollback e retorna uma mensagem de erro
+        db.rollback()
+        return jsonify({"error": str(e)}), 500
+
+    finally:
+        # Fecha a sessão
+        db.close()
+
+
+
+@products_bp.route('/update/<int:product_id>', methods=['PUT'])
+def update_products(product_id):
+
+    # Cria uma nova sessão
+    db = SessionLocal()
+
+    # Busca o produto pelo ID
+    product = db.query(Product).get(product_id)
+    if not product:
+        return jsonify({"error": "Produto nao encontrado"}), 404
+
+    data = request.json
+
+    # Atualiza os dados do produto
+    product.name = data.get("name", product.name)
+    product.price = data.get("price", product.price)
+    product.description = data.get("description", product.description)
+
+    db.commit()
+
+    return jsonify({"message": "Produto atualizado com sucesso"})
