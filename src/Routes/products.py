@@ -121,5 +121,27 @@ def update_products(product_id):
     product.description = data.get("description", product.description)
 
     db.commit()
+    db.close()
 
     return jsonify({"message": "Produto atualizado com sucesso"})
+
+
+@products_bp.route('', methods=['GET'])
+def get_products():
+
+    # Cria uma nova sessão
+    db = SessionLocal()
+    
+    products = db.query(Product).all()
+    product_list = []
+
+    for product in products:
+        products_data = {
+        "id": product.id,
+        "name": product.name,
+        "price": product.price
+        }
+        product_list.append(products_data)
+
+    db.close()
+    return jsonify(product_list)
