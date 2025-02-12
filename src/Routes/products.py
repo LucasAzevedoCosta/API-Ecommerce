@@ -1,10 +1,12 @@
 from flask import request, jsonify, Blueprint
 from Models import Product
 from Database.database import SessionLocal
+from flask_login import login_required
 
 products_bp = Blueprint('products', __name__)
 
 @products_bp.route('/add', methods=['POST'])
+@login_required
 def add_products():
     data = request.json
 
@@ -41,6 +43,7 @@ def add_products():
 
 
 @products_bp.route('/delete/<int:product_id>', methods=['DELETE'])
+@login_required
 def delete_products(product_id):
     # Cria uma nova sessão
     db = SessionLocal()
@@ -103,6 +106,7 @@ def get_products_details(product_id):
 
 
 @products_bp.route('/update/<int:product_id>', methods=['PUT'])
+@login_required
 def update_products(product_id):
 
     # Cria uma nova sessão
