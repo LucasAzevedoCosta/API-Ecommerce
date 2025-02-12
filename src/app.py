@@ -1,7 +1,7 @@
 from flask import Flask
 from Database.database import SessionLocal
 from Database.database import engine, Base
-from Models import User, Product
+from Models import User, Product, CarItem
 from Routes import products_bp, sign_up_bp, login_bp, logout_bp
 from flask_login import LoginManager
 from dotenv import load_dotenv
