@@ -2,7 +2,7 @@ from flask import Flask
 from Database.database import SessionLocal
 from Database.database import engine, Base
 from Models import User, Product, CarItem
-from Routes import products_bp, sign_up_bp, login_bp, logout_bp
+from Routes import products_bp, sign_up_bp, login_bp, logout_bp, cart_bp
 from flask_login import LoginManager
 from dotenv import load_dotenv
 import os
@@ -36,6 +36,7 @@ app.register_blueprint(products_bp, url_prefix='/products')
 app.register_blueprint(sign_up_bp, url_prefix='/sign_up')
 app.register_blueprint(login_bp, url_prefix='/login')
 app.register_blueprint(logout_bp, url_prefix='/logout')
+app.register_blueprint(cart_bp, url_prefix='/cart')
 
 
 @app.route('/')
